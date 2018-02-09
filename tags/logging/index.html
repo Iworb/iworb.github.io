@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 2 | Iworb&#39;s blog</title>
+  <title>Tag: logging | Iworb&#39;s blog</title>
   <meta name="description" content="Еще один блог очередного разработчика, который метается между всякими технологиями" />
   <meta name="keywords" content="blog,IT,Web Front End,Web Back End,Web Full stack,Aleksandr Koshevierov,Iworb" />
   <meta name="HandheldFriendly" content="True" />
@@ -12,18 +12,17 @@
   <link rel="shortcut icon" href="/">
   <link rel="alternate" href="/atom.xml" title="Iworb's blog">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Серверная часть. Продолжение банкета 1.1. Logger 1.2. MongoDb1. Серверная часть. Продолжение банкета1.1. LoggerЛоггирование это хорошо, особенно хорошо настроенное.Для этой задачи хорошо подходит биб">
-<meta name="keywords" content="express,mongodb,logging">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 2">
-<meta property="og:url" content="http://iworb.github.io/2018/02/09/mevn-02/index.html">
+  <meta name="description" content="Еще один блог очередного разработчика, который метается между всякими технологиями">
+<meta name="keywords" content="blog,IT,Web Front End,Web Back End,Web Full stack,Aleksandr Koshevierov,Iworb">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Iworb&#39;s blog">
+<meta property="og:url" content="http://iworb.github.io/tags/logging/index.html">
 <meta property="og:site_name" content="Iworb&#39;s blog">
-<meta property="og:description" content="Серверная часть. Продолжение банкета 1.1. Logger 1.2. MongoDb1. Серверная часть. Продолжение банкета1.1. LoggerЛоггирование это хорошо, особенно хорошо настроенное.Для этой задачи хорошо подходит биб">
+<meta property="og:description" content="Еще один блог очередного разработчика, который метается между всякими технологиями">
 <meta property="og:locale" content="ru">
-<meta property="og:updated_time" content="2018-02-09T10:56:36.483Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 2">
-<meta name="twitter:description" content="Серверная часть. Продолжение банкета 1.1. Logger 1.2. MongoDb1. Серверная часть. Продолжение банкета1.1. LoggerЛоггирование это хорошо, особенно хорошо настроенное.Для этой задачи хорошо подходит биб">
+<meta name="twitter:title" content="Iworb&#39;s blog">
+<meta name="twitter:description" content="Еще один блог очередного разработчика, который метается между всякими технологиями">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -124,31 +123,35 @@
   <div class="l_body">
     <div class='container clearfix'>
       <div class='l_main'>
-        <article id="post-mevn-02"
-  class="post white-box article-type-post"
-  itemscope itemprop="blogPost">
-	<section class='meta'>
-	<h2 class="title">
-  	<a href="/2018/02/09/mevn-02/">
-    	Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 2
-    </a>
-  </h2>
-	<time>
-	  февр. 9, 2018
-	</time>
+        
+  <script>
+    window.subData= { title:'Tag : logging'}
+  </script>
+
+<section class="post-list">
 	
+    <div class='post-wrapper'>
+      <article class="post reveal">
+  <section class="meta">
+    
+    <h2 class="title">
+      <a href="/2018/02/09/mevn-02/">
+        Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 2
+      </a>
+    </h2>
+    
+    <time>
+      февр. 9, 2018
+    </time>
+		
     
     <div class='cats'>
         <a href="/categories/full-stack/">full-stack</a>
     </div>
 
-	</section>
-	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Серверная-часть-Продолжение-банкета"><span class="toc-number">1.</span> <span class="toc-text">1. Серверная часть. Продолжение банкета</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Logger"><span class="toc-number">1.1.</span> <span class="toc-text">1.1. Logger</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Logentries"><span class="toc-number">1.1.1.</span> <span class="toc-text">Logentries</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Papertail"><span class="toc-number">1.1.2.</span> <span class="toc-text">Papertail</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Loggly"><span class="toc-number">1.1.3.</span> <span class="toc-text">Loggly</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Logsene"><span class="toc-number">1.1.4.</span> <span class="toc-text">Logsene</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Logz-io"><span class="toc-number">1.1.5.</span> <span class="toc-text">Logz.io</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Graylog"><span class="toc-number">1.1.6.</span> <span class="toc-text">Graylog</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-MongoDb"><span class="toc-number">1.2.</span> <span class="toc-text">1.2. MongoDb</span></a></li></ol></li></ol></section>
-	
-	<section class="article typo">
-  	<div class="article-entry" itemprop="articleBody">
-    	<ol>
+  </section>
+  <section class="article typo">
+	  <ol>
 <li><a href="#s1">Серверная часть. Продолжение банкета</a><br> 1.1. <a href="#s11">Logger</a><br> 1.2. <a href="#s12">MongoDb</a><h2 id="1-Серверная-часть-Продолжение-банкета"><a href="#1-Серверная-часть-Продолжение-банкета" class="headerlink" title="1. Серверная часть. Продолжение банкета"></a>1. Серверная часть. Продолжение банкета<a name="s1"></a></h2><h3 id="1-1-Logger"><a href="#1-1-Logger" class="headerlink" title="1.1. Logger"></a>1.1. Logger<a name="s11"></a></h3>Логгирование это хорошо, особенно хорошо настроенное.<br>Для этой задачи хорошо подходит библиотека <code>winston</code>, также не помешает еще одна маленькая библиотека <code>mkdirp</code>, задача которой создавать папки. Последняя нужна для того, если мы хотим сохранять логи в файл.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -s winston winston-daily-rotate-file mkdirp</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
@@ -175,9 +178,11 @@
 <p>Конфиги:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graylog: &#123;  </span><br><span class="line">   enabled: <span class="literal">false</span>,  </span><br><span class="line">   servers: \[&#123;<span class="attr">host</span>: <span class="string">'192.168.1.100'</span>, <span class="attr">port</span>: <span class="number">12201</span>&#125;\],  </span><br><span class="line">   facility: <span class="string">'MEVN'</span>  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>Функция (добавляется после объявления переменной <code>logger</code>):<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Graylog transporter</span></span><br><span class="line"><span class="comment"> * https://www.graylog.org/</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">if</span> (config.logging.graylog.enabled) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Graylog log transport enabled! Servers: '</span> + <span class="built_in">JSON</span>.stringify(config.logging.graylog.servers))</span><br><span class="line">  <span class="keyword">let</span> graylog = <span class="built_in">require</span>(<span class="string">'winston-graylog2'</span>)</span><br><span class="line">  logger.add(graylog, &#123;</span><br><span class="line">    name: <span class="string">'Graylog'</span>,</span><br><span class="line">    level: <span class="string">'debug'</span>,</span><br><span class="line">    graylog: &#123;</span><br><span class="line">      servers: config.logging.graylog.servers,</span><br><span class="line">      facility: config.logging.graylog.facility</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="1-2-MongoDb"><a href="#1-2-MongoDb" class="headerlink" title="1.2. MongoDb"></a>1.2. MongoDb<a name="s12"></a></h3>
-  	</div>
-	  
-	  <div class="article-tags tags">
+
+    
+    
+    
+	  <div class="full-width auto-padding tags">
       
         <a href="/tags/express/">express</a>
       
@@ -187,26 +192,12 @@
       
 	  </div>
     
-		
-	
-		<div class="art-item-footer">
-				
-				
-					<span class="art-item-right">next：<a href="/2018/02/09/mevn-01/" rel="next"  title="Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 1">
-						Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 1
-					</a><i class="icon icon-chevron-thin-right"></i></span>
-				
-		</div>
-	
-	</section>
-	
+  </section>
 </article>
-<script>
-	window.subData = {
-		title: 'Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 2',
-		tools: true
-	}
-</script>
+    </div>
+  
+</section>
+
 
       </div>
       <aside class='l_side'>

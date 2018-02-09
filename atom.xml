@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Iworb&#39;s blog</title>
+  
+  <subtitle>just another one</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://iworb.github.io/"/>
+  <updated>2018-02-09T10:56:36.483Z</updated>
+  <id>http://iworb.github.io/</id>
+  
+  <author>
+    <name>Aleksandr Koshevierov &lt;iworb.ne@gmail.com&gt;</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 2</title>
+    <link href="http://iworb.github.io/2018/02/09/mevn-02/"/>
+    <id>http://iworb.github.io/2018/02/09/mevn-02/</id>
+    <published>2018-02-09T07:10:15.000Z</published>
+    <updated>2018-02-09T10:56:36.483Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;#s1&quot;&gt;Серверная часть. Продолжение банкета&lt;/a&gt;&lt;br&gt; 1.1. &lt;a href=&quot;#s11&quot;&gt;Logger&lt;/a&gt;&lt;br&gt; 1.2. &lt;a href=&quot;#s12&quot;&gt;MongoDb&lt;/a&gt;&lt;h2 id
+      
+    
+    </summary>
+    
+      <category term="full-stack" scheme="http://iworb.github.io/categories/full-stack/"/>
+    
+    
+      <category term="express" scheme="http://iworb.github.io/tags/express/"/>
+    
+      <category term="mongodb" scheme="http://iworb.github.io/tags/mongodb/"/>
+    
+      <category term="logging" scheme="http://iworb.github.io/tags/logging/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 1</title>
+    <link href="http://iworb.github.io/2018/02/09/mevn-01/"/>
+    <id>http://iworb.github.io/2018/02/09/mevn-01/</id>
+    <published>2018-02-09T07:05:03.000Z</published>
+    <updated>2018-02-09T10:55:53.738Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;#beg&quot;&gt;Перед началом&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#fmt&quot;&gt;Форматирование кода&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#git&quot;&gt;Git&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;
+      
+    
+    </summary>
+    
+      <category term="full-stack" scheme="http://iworb.github.io/categories/full-stack/"/>
+    
+    
+      <category term="eslint" scheme="http://iworb.github.io/tags/eslint/"/>
+    
+      <category term="git" scheme="http://iworb.github.io/tags/git/"/>
+    
+      <category term="express" scheme="http://iworb.github.io/tags/express/"/>
+    
+  </entry>
+  
+</feed>
