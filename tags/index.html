@@ -10,7 +10,7 @@
   
   <title>
     
-      Iworb&#39;s blog
+      Tags | Iworb&#39;s blog
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -126,39 +126,99 @@
 </header>
 
     <div id="article-banner">
-  <h2>Архив</h2>
+  <h2>Теги</h2>
 </div>
-<main class="app-body" id="archives">
-  
-  
-  
-    <section class="time-section">
-  <h1 class="section-year">
-    2018
-  </h1>
-  <div class="section-list">
+<main class="app-body">
+  <div id="tag-cloud">
     
+      <a class="tag1" data-name="tag-express">express</a>
     
-      <div class="section-list-item">
-        <a href="/2018/02/09/mevn-02/" class="archive-title">Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 2</a>
-        <p class="archive-date">02-09</p>
-      </div>
+      <a class="tag1" data-name="tag-mongodb">mongodb</a>
     
-      <div class="section-list-item">
-        <a href="/2018/02/09/mevn-01/" class="archive-title">Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 1</a>
-        <p class="archive-date">02-09</p>
-      </div>
+      <a class="tag1" data-name="tag-logging">logging</a>
+    
+      <a class="tag0" data-name="tag-eslint">eslint</a>
+    
+      <a class="tag2" data-name="tag-git">git</a>
     
   </div>
-</section>
   
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-express">express</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2018/02/09/mevn-02/">Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 2</a>
+          </li>
+        </ul>
+        
+        <ul class="tag-preview">
+          <li>
+            <a href="/2018/02/09/mevn-01/">Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 1</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-mongodb">mongodb</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2018/02/09/mevn-02/">Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 2</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-logging">logging</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2018/02/09/mevn-02/">Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 2</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-eslint">eslint</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2018/02/09/mevn-01/">Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 1</a>
+          </li>
+        </ul>
+        
+    </div>
+    
+    <div class="tag-list">
+      <h3 class="tag-name" id="tag-git">git</h3>
+      
+        <ul class="tag-preview">
+          <li>
+            <a href="/2018/02/09/mevn-01/">Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 1</a>
+          </li>
+        </ul>
+        
+    </div>
+    
 </main>
 
 <script>
   (function () {
-    var url = 'http://iworb.github.io/categories/full-stack/index.html';
-    $('#article-banner').geopattern(url);
-    $('.header').removeClass('fixed-header');
+    var url = 'http://iworb.github.io/tags/index.html'
+    $('#article-banner').geopattern(url)
+    $('.header').removeClass('fixed-header')
+
+    var tag = location.hash.replace('#', '')
+    if (tag) {
+      var tagId = "#tag-" + tag;
+      $("html, body").animate({
+        scrollTop: $(tagId).offset().top 
+      }, 400)
+    }
   })();
 </script>
     <div class="scroll-top">

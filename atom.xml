@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://iworb.github.io/"/>
-  <updated>2018-02-09T10:56:36.483Z</updated>
+  <updated>2018-02-09T11:12:58.177Z</updated>
   <id>http://iworb.github.io/</id>
   
   <author>
@@ -21,14 +21,13 @@
     <link href="http://iworb.github.io/2018/02/09/mevn-02/"/>
     <id>http://iworb.github.io/2018/02/09/mevn-02/</id>
     <published>2018-02-09T07:10:15.000Z</published>
-    <updated>2018-02-09T10:56:36.483Z</updated>
+    <updated>2018-02-09T11:12:58.177Z</updated>
     
     <summary type="html">
     
       
       
-        &lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;#s1&quot;&gt;Серверная часть. Продолжение банкета&lt;/a&gt;&lt;br&gt; 1.1. &lt;a href=&quot;#s11&quot;&gt;Logger&lt;/a&gt;&lt;br&gt; 1.2. &lt;a href=&quot;#s12&quot;&gt;MongoDb&lt;/a&gt;&lt;h2 id
+        &lt;h2 id=&quot;Серверная-часть-Продолжение-банкета&quot;&gt;&lt;a href=&quot;#Серверная-часть-Продолжение-банкета&quot; class=&quot;headerlink&quot; title=&quot;Серверная часть. Продо
       
     
     </summary>
@@ -49,17 +48,13 @@
     <link href="http://iworb.github.io/2018/02/09/mevn-01/"/>
     <id>http://iworb.github.io/2018/02/09/mevn-01/</id>
     <published>2018-02-09T07:05:03.000Z</published>
-    <updated>2018-02-09T10:55:53.738Z</updated>
+    <updated>2018-02-09T11:12:35.612Z</updated>
     
     <summary type="html">
     
       
       
-        &lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;#beg&quot;&gt;Перед началом&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#fmt&quot;&gt;Форматирование кода&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#git&quot;&gt;Git&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;
+        &lt;h2 id=&quot;Перед-началом&quot;&gt;&lt;a href=&quot;#Перед-началом&quot; class=&quot;headerlink&quot; title=&quot;Перед началом&quot;&gt;&lt;/a&gt;Перед началом&lt;/h2&gt;&lt;p&gt;Актуальные версии &lt;code&gt;No
       
     
     </summary>
@@ -67,11 +62,11 @@
       <category term="full-stack" scheme="http://iworb.github.io/categories/full-stack/"/>
     
     
+      <category term="express" scheme="http://iworb.github.io/tags/express/"/>
+    
       <category term="eslint" scheme="http://iworb.github.io/tags/eslint/"/>
     
       <category term="git" scheme="http://iworb.github.io/tags/git/"/>
-    
-      <category term="express" scheme="http://iworb.github.io/tags/express/"/>
     
   </entry>
   
