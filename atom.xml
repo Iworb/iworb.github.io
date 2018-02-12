@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://iworb.github.io/"/>
-  <updated>2018-02-09T11:12:58.177Z</updated>
+  <updated>2018-02-12T13:17:40.190Z</updated>
   <id>http://iworb.github.io/</id>
   
   <author>
@@ -17,52 +17,52 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 2</title>
-    <link href="http://iworb.github.io/2018/02/09/mevn-02/"/>
-    <id>http://iworb.github.io/2018/02/09/mevn-02/</id>
-    <published>2018-02-09T07:10:15.000Z</published>
-    <updated>2018-02-09T11:12:58.177Z</updated>
+    <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 2: Nuxt and Expres</title>
+    <link href="http://iworb.github.io/2018/02/12/01-nemvn/"/>
+    <id>http://iworb.github.io/2018/02/12/01-nemvn/</id>
+    <published>2018-02-12T13:11:12.000Z</published>
+    <updated>2018-02-12T13:17:40.190Z</updated>
     
     <summary type="html">
     
       
       
-        &lt;h2 id=&quot;Серверная-часть-Продолжение-банкета&quot;&gt;&lt;a href=&quot;#Серверная-часть-Продолжение-банкета&quot; class=&quot;headerlink&quot; title=&quot;Серверная часть. Продо
+        &lt;h2 id=&quot;Nuxt&quot;&gt;&lt;a href=&quot;#Nuxt&quot; class=&quot;headerlink&quot; title=&quot;Nuxt&quot;&gt;&lt;/a&gt;Nuxt&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pr
       
     
     </summary>
     
       <category term="full-stack" scheme="http://iworb.github.io/categories/full-stack/"/>
     
+      <category term="NEMVN" scheme="http://iworb.github.io/categories/full-stack/NEMVN/"/>
     
-      <category term="express" scheme="http://iworb.github.io/tags/express/"/>
     
-      <category term="mongodb" scheme="http://iworb.github.io/tags/mongodb/"/>
+      <category term="eslint" scheme="http://iworb.github.io/tags/eslint/"/>
     
-      <category term="logging" scheme="http://iworb.github.io/tags/logging/"/>
+      <category term="git" scheme="http://iworb.github.io/tags/git/"/>
     
   </entry>
   
   <entry>
-    <title>Full stack MEVN (MongoDb + Express + Vue + Node) проект на Node. Часть 1</title>
-    <link href="http://iworb.github.io/2018/02/09/mevn-01/"/>
-    <id>http://iworb.github.io/2018/02/09/mevn-01/</id>
-    <published>2018-02-09T07:05:03.000Z</published>
-    <updated>2018-02-09T11:12:35.612Z</updated>
+    <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 0: Usefull stuff</title>
+    <link href="http://iworb.github.io/2018/02/12/00-nemvn/"/>
+    <id>http://iworb.github.io/2018/02/12/00-nemvn/</id>
+    <published>2018-02-12T13:10:12.000Z</published>
+    <updated>2018-02-12T13:17:01.088Z</updated>
     
     <summary type="html">
     
       
       
-        &lt;h2 id=&quot;Перед-началом&quot;&gt;&lt;a href=&quot;#Перед-началом&quot; class=&quot;headerlink&quot; title=&quot;Перед началом&quot;&gt;&lt;/a&gt;Перед началом&lt;/h2&gt;&lt;p&gt;Актуальные версии &lt;code&gt;No
+        &lt;h2 id=&quot;Begin&quot;&gt;&lt;a href=&quot;#Begin&quot; class=&quot;headerlink&quot; title=&quot;Begin&quot;&gt;&lt;/a&gt;Begin&lt;/h2&gt;&lt;p&gt;To start new project create new directory and run this com
       
     
     </summary>
     
       <category term="full-stack" scheme="http://iworb.github.io/categories/full-stack/"/>
     
+      <category term="NEMVN" scheme="http://iworb.github.io/categories/full-stack/NEMVN/"/>
     
-      <category term="express" scheme="http://iworb.github.io/tags/express/"/>
     
       <category term="eslint" scheme="http://iworb.github.io/tags/eslint/"/>
     
