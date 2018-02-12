@@ -3,6 +3,23 @@
   
     
     <entry>
+      <title><![CDATA[Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 2: Helpers and Configs]]></title>
+      <url>/2018/02/12/02-nemvn/</url>
+      <content type="html"><![CDATA[<p>WIP</p>
+]]></content>
+      
+        <categories>
+            
+            <category> full-stack </category>
+            
+            <category> NEMVN </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 2: Nuxt and Expres]]></title>
       <url>/2018/02/12/01-nemvn/</url>
       <content type="html"><![CDATA[<h2 id="Nuxt"><a href="#Nuxt" class="headerlink" title="Nuxt"></a>Nuxt</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn add nuxt</span><br><span class="line">yarn add stylus stylus-loader --dev</span><br></pre></td></tr></table></figure>
@@ -24,9 +41,9 @@
         
         <tags>
             
-            <tag> eslint </tag>
+            <tag> nuxt </tag>
             
-            <tag> git </tag>
+            <tag> express </tag>
             
         </tags>
         
