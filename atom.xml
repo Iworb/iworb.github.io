@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://iworb.github.io/"/>
-  <updated>2018-02-12T13:32:21.811Z</updated>
+  <updated>2018-02-13T07:00:18.782Z</updated>
   <id>http://iworb.github.io/</id>
   
   <author>
@@ -17,18 +17,17 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 2: Helpers and Configs</title>
+    <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 2: Helpers, Configs and Session</title>
     <link href="http://iworb.github.io/2018/02/12/02-nemvn/"/>
     <id>http://iworb.github.io/2018/02/12/02-nemvn/</id>
     <published>2018-02-12T13:31:15.000Z</published>
-    <updated>2018-02-12T13:32:21.811Z</updated>
+    <updated>2018-02-13T07:00:18.782Z</updated>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;WIP&lt;/p&gt;
-
+        &lt;h2 id=&quot;Helpers&quot;&gt;&lt;a href=&quot;#Helpers&quot; class=&quot;headerlink&quot; title=&quot;Helpers&quot;&gt;&lt;/a&gt;Helpers&lt;/h2&gt;&lt;p&gt;Helpers will land in &lt;code&gt;server/helpers&lt;/code&gt; d
       
     
     </summary>
@@ -45,7 +44,7 @@
     <link href="http://iworb.github.io/2018/02/12/01-nemvn/"/>
     <id>http://iworb.github.io/2018/02/12/01-nemvn/</id>
     <published>2018-02-12T13:11:12.000Z</published>
-    <updated>2018-02-12T13:32:11.162Z</updated>
+    <updated>2018-02-12T14:29:31.462Z</updated>
     
     <summary type="html">
     
@@ -72,7 +71,7 @@
     <link href="http://iworb.github.io/2018/02/12/00-nemvn/"/>
     <id>http://iworb.github.io/2018/02/12/00-nemvn/</id>
     <published>2018-02-12T13:10:12.000Z</published>
-    <updated>2018-02-12T13:17:01.088Z</updated>
+    <updated>2018-02-12T14:29:46.334Z</updated>
     
     <summary type="html">
     
