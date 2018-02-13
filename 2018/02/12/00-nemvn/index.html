@@ -146,7 +146,8 @@
 <li>@ - root path</li>
 </ul>
 <h2 id="Cross-env-variables"><a href="#Cross-env-variables" class="headerlink" title="Cross env variables"></a>Cross env variables</h2><p>To define node environment variables in <code>package.json</code> you could send it before running node by itself, but in the windows it won’t work, so let’s fix that:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add cross-env</span><br></pre></td></tr></table></figure></p>
-<p>Now ce can add some scripts:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;start&quot;: &quot;nuxt build &amp; cross-env NODE_ENV=production node server/index.js&quot;,</span><br><span class="line">&quot;dev&quot;: &quot;node server/index.js&quot;</span><br></pre></td></tr></table></figure></p>
+<p>Now we can add some scripts:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;start&quot;: &quot;nuxt build &amp; cross-env NODE_ENV=production node server/index.js&quot;,</span><br><span class="line">&quot;dev&quot;: &quot;node server/index.js&quot;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Handling-date-and-time"><a href="#Handling-date-and-time" class="headerlink" title="Handling date and time"></a>Handling date and time</h2><p>Let’s use <code>moment</code> package for date and time:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add moment</span><br></pre></td></tr></table></figure></p>
 </section>
     <!-- Tags START -->
     
@@ -199,7 +200,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Begin"><span class="toc-nav-text">Begin</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Linter"><span class="toc-nav-text">Linter</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Module-alias"><span class="toc-nav-text">Module alias</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Cross-env-variables"><span class="toc-nav-text">Cross env variables</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Begin"><span class="toc-nav-text">Begin</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Linter"><span class="toc-nav-text">Linter</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Module-alias"><span class="toc-nav-text">Module alias</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Cross-env-variables"><span class="toc-nav-text">Cross env variables</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Handling-date-and-time"><span class="toc-nav-text">Handling date and time</span></a></li></ol>
     
   </div>
 </aside>

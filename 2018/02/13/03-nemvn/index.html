@@ -1,34 +1,141 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search> 
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Just another one developer blog, who looked for Holy grail">
+  <meta name="keyword" content="hexo-theme, vuejs">
   
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
     
-    <entry>
-      <title><![CDATA[Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 4: MongoDb]]></title>
-      <url>/2018/02/13/04-nemvn/</url>
-      <content type="html"><![CDATA[<p>[WIP]</p>
-]]></content>
+      Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 3: Logging, initialization splitting and more helpers | Iworb&#39;s blog
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Iworb's blog</span>
+    </a>
+    <ul class="right-list">
       
-        <categories>
-            
-            <category> full-stack </category>
-            
-            <category> NEMVN </category>
-            
-        </categories>
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archive</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About me</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
         
-        
-        <tags>
+          <li class="menu-item">
             
-            <tag> mongo </tag>
+              <a href="/" class="menu-link">Home</a>
             
-        </tags>
+          </li>
         
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 3: Logging, initialization splitting and more helpers]]></title>
-      <url>/2018/02/13/03-nemvn/</url>
-      <content type="html"><![CDATA[<h2 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a>Logging</h2><p>Console logging is good, but it doesn’t cover all needs. Server could turn off instantly and you won’t see any messages, or there’s plenty errors and you have no time to read a single one, etc.<br>Let’s take a look for other logging variations.<br>There’s already good module to achieve different behaviours:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add winston</span><br></pre></td></tr></table></figure></p>
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archive</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About me</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 3: Logging, initialization splitting and more helpers</h2>
+  <p class="post-date">2018-02-13</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a>Logging</h2><p>Console logging is good, but it doesn’t cover all needs. Server could turn off instantly and you won’t see any messages, or there’s plenty errors and you have no time to read a single one, etc.<br>Let’s take a look for other logging variations.<br>There’s already good module to achieve different behaviours:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add winston</span><br></pre></td></tr></table></figure></p>
 <p>Files, belong using for init our application and other nifty functions which require config will land into <code>server/engine</code> directory. Make sure to include it into your module aliases list:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;@engine&quot;: &quot;./server/engine&quot;</span><br></pre></td></tr></table></figure></p>
 <p>Lets make a new file <code>logger.js</code> with console output:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> winston = <span class="built_in">require</span>(<span class="string">'winston'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'@config'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;env&#125; = <span class="built_in">require</span>(<span class="string">'@helpers'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> transports = []</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Console transporter</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">transports.push(<span class="keyword">new</span> winston.transports.Console(&#123;</span><br><span class="line">  level: config.logging.console.level,</span><br><span class="line">  colorize: <span class="literal">true</span>,</span><br><span class="line">  prettyPrint: <span class="literal">true</span>,</span><br><span class="line">  handleExceptions: env.isProduction()</span><br><span class="line">&#125;))</span><br><span class="line"></span><br><span class="line"><span class="comment">// [before]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> logger = <span class="keyword">new</span> winston.Logger(&#123;</span><br><span class="line">  level: <span class="string">'debug'</span>,</span><br><span class="line">  transports: transports,</span><br><span class="line">  exitOnError: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// [after]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = logger</span><br></pre></td></tr></table></figure></p>
 <p>As you can see we’re using <code>config.logging.console.level</code> variable to define level of console logging. Let’s extend our <code>config.template.js</code> for logging:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">logging: &#123;</span><br><span class="line">  <span class="built_in">console</span>: &#123;</span><br><span class="line">    level: <span class="string">'debug'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -73,138 +180,204 @@
 <p><code>server/helpers/sysinfo.js</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> logger = <span class="built_in">require</span>(<span class="string">'@engine/logger'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> os = <span class="built_in">require</span>(<span class="string">'os'</span>)</span><br><span class="line"><span class="keyword">const</span> gauge = <span class="built_in">require</span>(<span class="string">'clui'</span>).Gauge</span><br><span class="line"><span class="keyword">const</span> pretty = <span class="built_in">require</span>(<span class="string">'pretty-bytes'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> total = os.totalmem()</span><br><span class="line"><span class="keyword">const</span> free = os.freemem()</span><br><span class="line"><span class="keyword">const</span> used = total - free</span><br><span class="line"><span class="keyword">const</span> human = pretty(free)</span><br><span class="line"></span><br><span class="line">logger.info(<span class="string">`CPU:\t\t\tArch: <span class="subst">$&#123;os.arch()&#125;</span>, Cores: <span class="subst">$&#123;os.cpus().length&#125;</span>`</span>)</span><br><span class="line">logger.info(<span class="string">`Memory:\t\t<span class="subst">$&#123;gauge(used, total, <span class="number">20</span>, total * <span class="number">0.8</span>, human + <span class="string">' free'</span>)&#125;</span>`</span>)</span><br><span class="line">logger.info(<span class="string">`OS:\t\t\t<span class="subst">$&#123;os.platform()&#125;</span> (<span class="subst">$&#123;os.type()&#125;</span>)`</span>)</span><br></pre></td></tr></table></figure></p>
 <p>And call him after server start inside <code>app.listen</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">app.listen(..., () =&gt; &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'@helpers/sysinfo'</span>)</span><br><span class="line">  logger.info(<span class="string">'--------------------------------------------------------------------------------'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
 <p>This part wraps up <code>03-logging-split-extras</code> git branch.</p>
-]]></content>
-      
-        <categories>
-            
-            <category> full-stack </category>
-            
-            <category> NEMVN </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> express </tag>
-            
-            <tag> log </tag>
-            
-        </tags>
-        
-    </entry>
+</section>
+    <!-- Tags START -->
     
-    <entry>
-      <title><![CDATA[Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 2: Helpers, Configs and Session]]></title>
-      <url>/2018/02/13/02-nemvn/</url>
-      <content type="html"><![CDATA[<h2 id="Helpers"><a href="#Helpers" class="headerlink" title="Helpers"></a>Helpers</h2><p>Helpers will land in <code>server/helpers</code> directory, so add an alias in <code>package.json</code> for it:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;@helpers&quot;: &quot;./server/helpers&quot;</span><br></pre></td></tr></table></figure></p>
-<h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><p>Let’s add <code>env.js</code> helper which checks our environment:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  isDev () &#123;</span><br><span class="line">    <span class="keyword">return</span> !process.env.NODE_ENV || process.env.NODE_ENV === <span class="string">'development'</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  isProduction () &#123;</span><br><span class="line">    <span class="keyword">return</span> process.env.NODE_ENV === <span class="string">'production'</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  isTest () &#123;</span><br><span class="line">    <span class="keyword">return</span> process.env.NODE_ENV === <span class="string">'test'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>To export this module in easy way lets make an <code>index</code> for helpers:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> env = <span class="built_in">require</span>(<span class="string">'./env'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  env</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="Token-generator"><a href="#Token-generator" class="headerlink" title="Token generator"></a>Token generator</h3><p>Another one nifty helper intended for token generation for secrets.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add uuid-token-generator</span><br></pre></td></tr></table></figure></p>
-<p><code>tokgen.js</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> TokenGenerator = <span class="built_in">require</span>(<span class="string">'uuid-token-generator'</span>)</span><br><span class="line"><span class="keyword">let</span> tokgen = <span class="keyword">new</span> TokenGenerator(<span class="number">256</span>, TokenGenerator.BASE62)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> tokgen.generate()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>And extend index file for this new helper:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> env = <span class="built_in">require</span>(<span class="string">'./env'</span>)</span><br><span class="line"><span class="keyword">const</span> tokgen = <span class="built_in">require</span>(<span class="string">'./tokgen'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  env,</span><br><span class="line">  tokgen</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="Configs"><a href="#Configs" class="headerlink" title="Configs"></a>Configs</h2><p>Config should be flexible, so we have to merge it into separate files:</p>
-<ul>
-<li><code>base.js</code> - basic configuration which should be a skeleton of config;</li>
-<li><code>config.template.js</code> - <strong>template</strong> for <code>config.js</code> file, which could be used to set your own secrets. It is excluded from git, so we need a template to create new one if there’s new instance;</li>
-<li><code>dev.js</code>, <code>prod.js</code> and <code>test.js</code> - confings based on environment;</li>
-<li><code>index.js</code> - summary config.<br>Let’s init them with following code:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>As an example let’s make a session config.<br><code>base.js</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  session: &#123;</span><br><span class="line">    resave: <span class="literal">true</span>,</span><br><span class="line">    saveUninitialized: <span class="literal">false</span>,</span><br><span class="line">    cookie: &#123;</span><br><span class="line">      <span class="comment">// reset session after 1 week</span></span><br><span class="line">      maxAge: <span class="number">7</span> * <span class="number">24</span> * (<span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>),</span><br><span class="line">      <span class="comment">// we will use cookies just for HTTP, not js</span></span><br><span class="line">      <span class="comment">// JS will send this cookies only from current domain</span></span><br><span class="line">      httpOnly: <span class="literal">true</span>,</span><br><span class="line">      <span class="comment">// should be 'true' if you're using https</span></span><br><span class="line">      secure: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Now we have almost complete session config but <code>secret</code>. Each user have to define his own session, so lets make our template which will generate <code>secret</code> for a session if there’s no <code>config.js</code> file.<br><code>config.template.js</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  session: &#123;</span><br><span class="line">    secret: <span class="string">'&#123;&#123;sessionSecret&#125;&#125;'</span>,</span><br><span class="line">    resave: <span class="literal">true</span>,</span><br><span class="line">    saveUninitialized: <span class="literal">false</span>,</span><br><span class="line">    cookie: &#123;</span><br><span class="line">      <span class="comment">// reset session after 1 week</span></span><br><span class="line">      maxAge: <span class="number">7</span> * <span class="number">24</span> * (<span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>),</span><br><span class="line">      <span class="comment">// we will use cookies just for HTTP, not js</span></span><br><span class="line">      <span class="comment">// JS will send this cookies only from current domain</span></span><br><span class="line">      httpOnly: <span class="literal">true</span>,</span><br><span class="line">      <span class="comment">// should be 'true' if you're using https</span></span><br><span class="line">      secure: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code></code> and another stuff in double braces will be replaced with provided data.<br>To improve console logging and js functionality I gonna include this modules into project:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add chalk lodash</span><br></pre></td></tr></table></figure></p>
-<p>There’s how <code>index.js</code> file looks:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br><span class="line"><span class="keyword">const</span> chalk = <span class="built_in">require</span>(<span class="string">'chalk'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;tokgen, env&#125; = <span class="built_in">require</span>(<span class="string">'@helpers'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> config = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="comment">// [1]</span></span><br><span class="line">  <span class="keyword">if</span> (!fs.existsSync(path.join(__dirname, <span class="string">'config.js'</span>))) &#123;</span><br><span class="line">    <span class="built_in">console</span>.warn(chalk.yellow.bold(<span class="string">'`config.js` for server settings was not found! Generating new `config.js` file'</span>))</span><br><span class="line">    <span class="keyword">const</span> template = fs.readFileSync(path.join(__dirname, <span class="string">'config.template.js'</span>))</span><br><span class="line">    _.templateSettings.interpolate = <span class="regexp">/&#123;&#123;([\s\S]+?)&#125;&#125;/g</span></span><br><span class="line">    <span class="keyword">const</span> compiled = _.template(template)</span><br><span class="line">    <span class="keyword">const</span> replacements = &#123;</span><br><span class="line">      sessionSecret: tokgen()</span><br><span class="line">    &#125;</span><br><span class="line">    fs.writeFileSync(path.join(__dirname, <span class="string">'config.js'</span>), compiled(replacements))</span><br><span class="line">    <span class="built_in">console</span>.warn(chalk.green.bold(<span class="string">'New `config.js` for server settings file was generated. You could update your settings here: "server/config/config.js"'</span>))</span><br><span class="line">  &#125;</span><br><span class="line">  config = <span class="built_in">require</span>(<span class="string">'./config'</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">  <span class="built_in">console</span>.warn(chalk.red.bold(<span class="string">'\r\n=============================================='</span>))</span><br><span class="line">  <span class="built_in">console</span>.warn(chalk.red.bold(<span class="string">'  Unable to load external `config.js` file!'</span>))</span><br><span class="line">  <span class="built_in">console</span>.warn(chalk.red.bold(<span class="string">' '</span>, error))</span><br><span class="line">  <span class="built_in">console</span>.warn(chalk.red.bold(<span class="string">'==============================================\r\n'</span>))</span><br><span class="line">  process.exit(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// [2]</span></span><br><span class="line"><span class="keyword">let</span> envConfig = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (env.isDev()) &#123;</span><br><span class="line">  envConfig = <span class="built_in">require</span>(<span class="string">'./dev'</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (env.isTest()) &#123;</span><br><span class="line">  envConfig = <span class="built_in">require</span>(<span class="string">'./test'</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (env.isProduction()) &#123;</span><br><span class="line">  envConfig = <span class="built_in">require</span>(<span class="string">'./prod'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// [3]</span></span><br><span class="line"><span class="keyword">const</span> base = <span class="built_in">require</span>(<span class="string">'./base'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = _.defaultsDeep(envConfig, config, base)</span><br></pre></td></tr></table></figure></p>
-<p>First of all we have to check is there <code>config.js</code> [1] file exists. If no we’re reading our <code>config.template.js</code> and replace template variables with generated values and make <code>config.js</code>.<br>Next [2] we’re reading environment-based config and [3] base one, than return merged config.<br>Last thing is module alias for <code>config</code> folder:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;@config&quot;: &quot;./server/config&quot;</span><br></pre></td></tr></table></figure></p>
-<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add express-session cookie-parser body-parser</span><br></pre></td></tr></table></figure>
-<p>Add using of session in our application lets extend <code>server/index.js</code> file:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'module-alias/register'</span>)</span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'@config'</span>)</span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">const</span> session = <span class="built_in">require</span>(<span class="string">'express-session'</span>)</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>)</span><br><span class="line"><span class="keyword">const</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> configSession = config.session</span><br><span class="line">app.use(bodyParser.urlencoded(&#123;</span><br><span class="line">  extended: <span class="literal">true</span></span><br><span class="line">&#125;))</span><br><span class="line">app.use(bodyParser.json())</span><br><span class="line">app.use(cookieParser())</span><br><span class="line">app.use(session(configSession))</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123;Nuxt, Builder&#125; = <span class="built_in">require</span>(<span class="string">'nuxt'</span>)</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>This part wraps up <code>02-helpers-config-session</code> git branch.</p>
-]]></content>
-      
-        <categories>
-            
-            <category> full-stack </category>
-            
-            <category> NEMVN </category>
-            
-        </categories>
+      <div class="tags">
+        <span>Tags:</span>
         
-        
-        <tags>
-            
-            <tag> express </tag>
-            
-        </tags>
-        
-    </entry>
+  <a href="/tags#express" >
+    <span class="tag-code">express</span>
+  </a>
+
+  <a href="/tags#log" >
+    <span class="tag-code">log</span>
+  </a>
+
+      </div>
     
-    <entry>
-      <title><![CDATA[Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 2: Nuxt and Expres]]></title>
-      <url>/2018/02/12/01-nemvn/</url>
-      <content type="html"><![CDATA[<h2 id="Nuxt"><a href="#Nuxt" class="headerlink" title="Nuxt"></a>Nuxt</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn add nuxt</span><br><span class="line">yarn add stylus stylus-loader --dev</span><br></pre></td></tr></table></figure>
-<p>Lets make <code>client</code> directory in our project. It will contain whole frontend code made with <code>Nuxt</code>.<br>Also, create <code>nuxt.config.js</code> in the root folder to define Nuxt settings.<br>Lets define client directory and loader color:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  loading: &#123;<span class="attr">color</span>: <span class="string">'#3B8070'</span>&#125;,</span><br><span class="line">  srcDir: <span class="string">'client/'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Lets make a single page. Create <code>client/pages</code> directory and <code>index.vue</code> file within. Then fill this file with some test data:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        Hello #&#123;&#123; counter &#125;&#125;</span><br><span class="line">    &lt;button @click=&quot;counter = counter +1&quot;&gt;+1&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    export default &#123;</span><br><span class="line">      data () &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">          counter: 0</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang=&quot;stylus&quot;&gt;</span><br><span class="line">    div</span><br><span class="line">        background-color lightblue</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></p>
-<h2 id="Express"><a href="#Express" class="headerlink" title="Express"></a>Express</h2><p>Lets make an entry point: in the <code>server</code> directory create <code>index.js</code>.<br>Before further work we have to install some modules:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add express</span><br></pre></td></tr></table></figure></p>
-<p><code>server/index.js</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'module-alias/register'</span>) <span class="comment">// Details at Part 0/Module alias </span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123;Nuxt, Builder&#125; = <span class="built_in">require</span>(<span class="string">'nuxt'</span>)</span><br><span class="line"><span class="keyword">const</span> nuxtConfig = <span class="built_in">require</span>(<span class="string">'@/nuxt.config'</span>)</span><br><span class="line">nuxtConfig.dev = process.env.NODE_ENV !== <span class="string">'production'</span></span><br><span class="line"><span class="keyword">const</span> nuxt = <span class="keyword">new</span> Nuxt(nuxtConfig)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (nuxtConfig.dev) &#123;</span><br><span class="line">  <span class="keyword">new</span> Builder(nuxt).build()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.use(nuxt.render)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`Application was started at the 3000th port`</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">exports = <span class="built_in">module</span>.exports = app</span><br></pre></td></tr></table></figure></p>
-<p>Now we should modify our <code>package.json</code> and set our main script to <code>server/index.js</code>.<br>That’s all. Now we can run our server with <code>yarn run</code> and we’ll got simple page located on <code>http://localhost:3000</code>.<br>This part wraps up <code>01-nuxt-express</code> git branch.</p>
-]]></content>
-      
-        <categories>
-            
-            <category> full-stack </category>
-            
-            <category> NEMVN </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> nuxt </tag>
-            
-            <tag> express </tag>
-            
-        </tags>
-        
-    </entry>
+    <!-- Tags END -->
+    <!-- NAV START -->
     
-    <entry>
-      <title><![CDATA[Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 0: Usefull stuff]]></title>
-      <url>/2018/02/12/00-nemvn/</url>
-      <content type="html"><![CDATA[<h2 id="Begin"><a href="#Begin" class="headerlink" title="Begin"></a>Begin</h2><p>To start new project create new directory and run this commends to init node application and git:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn init</span><br><span class="line">git init</span><br></pre></td></tr></table></figure></p>
-<p>I will use <code>yarn</code>, but you could use <code>npm</code>, commands are mostly the same.<br>To configure git lets add <code>.gitignore</code> file:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">################################################</span><br><span class="line"># Dependencies</span><br><span class="line">################################################</span><br><span class="line"></span><br><span class="line">node_modules</span><br><span class="line"></span><br><span class="line">################################################</span><br><span class="line"># Node.js / NPM</span><br><span class="line">################################################</span><br><span class="line"></span><br><span class="line">lib-cov</span><br><span class="line">*.seed</span><br><span class="line">*.log</span><br><span class="line">*.out</span><br><span class="line">*.pid</span><br><span class="line">npm-debug.log</span><br><span class="line"></span><br><span class="line">################################################</span><br><span class="line"># Miscellaneous</span><br><span class="line">################################################</span><br><span class="line"></span><br><span class="line">*~</span><br><span class="line">*#</span><br><span class="line">.DS_STORE</span><br><span class="line">.netbeans</span><br><span class="line">nbproject</span><br><span class="line">.idea</span><br><span class="line">.node_history</span><br><span class="line">dump.rdb</span><br><span class="line">.nuxt</span><br><span class="line">.vscode</span><br></pre></td></tr></table></figure></p>
-<h2 id="Linter"><a href="#Linter" class="headerlink" title="Linter"></a>Linter</h2><p>Let’s add some style check:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yarn add eslint</span><br><span class="line">.\node_modules\.bin\eslint --init</span><br><span class="line">yarn install</span><br></pre></td></tr></table></figure></p>
-<p>We will use <code>Standard</code> style guide in JSON format.<br>Let’s expand it little bit:<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"env"</span>: &#123;</span><br><span class="line">        <span class="attr">"es6"</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">"node"</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">"mocha"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"parserOptions"</span>: &#123;</span><br><span class="line">        <span class="attr">"ecmaVersion"</span>: <span class="number">8</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"extends"</span>: <span class="string">"standard"</span>,</span><br><span class="line">    <span class="attr">"rules"</span>: &#123;</span><br><span class="line">        <span class="attr">"arrow-parens"</span>: [<span class="string">"error"</span>, <span class="string">"as-needed"</span>],</span><br><span class="line">        <span class="attr">"linebreak-style"</span>: [<span class="string">"error"</span>, <span class="string">"unix"</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>It will extend our environment, set ECMA Script version to 8th and define some rules.</p>
-<h2 id="Module-alias"><a href="#Module-alias" class="headerlink" title="Module alias"></a>Module alias</h2><p>Working with relative path is kidna hard, so lets make it easier:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add module-alias</span><br></pre></td></tr></table></figure></p>
-<p>Now we can define aliases which will makes relative paths looks like absolute one.<br>In the <code>package.json</code> we could add new section <code>_moduleAliases</code> and define some paths:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;_moduleAliases&quot;: &#123;</span><br><span class="line">  &quot;@&quot;: &quot;.&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>@ - root path</li>
-</ul>
-<h2 id="Cross-env-variables"><a href="#Cross-env-variables" class="headerlink" title="Cross env variables"></a>Cross env variables</h2><p>To define node environment variables in <code>package.json</code> you could send it before running node by itself, but in the windows it won’t work, so let’s fix that:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add cross-env</span><br></pre></td></tr></table></figure></p>
-<p>Now we can add some scripts:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;start&quot;: &quot;nuxt build &amp; cross-env NODE_ENV=production node server/index.js&quot;,</span><br><span class="line">&quot;dev&quot;: &quot;node server/index.js&quot;</span><br></pre></td></tr></table></figure></p>
-<h2 id="Handling-date-and-time"><a href="#Handling-date-and-time" class="headerlink" title="Handling date and time"></a>Handling date and time</h2><p>Let’s use <code>moment</code> package for date and time:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add moment</span><br></pre></td></tr></table></figure></p>
-]]></content>
-      
-        <categories>
-            
-            <category> full-stack </category>
-            
-            <category> NEMVN </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> eslint </tag>
-            
-            <tag> git </tag>
-            
-        </tags>
-        
-    </entry>
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
     
+      <a class="nav-left" href="/2018/02/13/02-nemvn/">
+        <span class="nav-arrow">← </span>
+        
+          Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 2: Helpers, Configs and Session
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2018/02/13/04-nemvn/">
+        
+          Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 4: MongoDb
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
   
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Logging"><span class="toc-nav-text">Logging</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#File-before"><span class="toc-nav-text">File [before]</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Logentries-before"><span class="toc-nav-text">Logentries [before]</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Papertrail-before"><span class="toc-nav-text">Papertrail [before]</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Loggly-after"><span class="toc-nav-text">Loggly [after]</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Logsene-after"><span class="toc-nav-text">Logsene [after]</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Logz-io-after"><span class="toc-nav-text">Logz.io [after]</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Graylog-after"><span class="toc-nav-text">Graylog [after]</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Entry-point"><span class="toc-nav-text">Entry point</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Express-extras"><span class="toc-nav-text">Express extras</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Compression"><span class="toc-nav-text">Compression</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Morgan"><span class="toc-nav-text">Morgan</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Helmet"><span class="toc-nav-text">Helmet</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Extra-helpers"><span class="toc-nav-text">Extra helpers</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Safe-stop"><span class="toc-nav-text">Safe stop</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#System-info"><span class="toc-nav-text">System info</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
   
-</search>
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://iworb.github.io/2018/02/13/03-nemvn/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "iworb";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 3: Logging, initialization splitting and more helpers",
+        owner: "iworb",
+        repo: "iworb.github.io",
+        oauth: {
+          client_id: "fc37e05eb55faa187774",
+          client_secret: "5f04db8e93239c8bded02d72e698c87a985f428c"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "ru-RU"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

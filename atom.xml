@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://iworb.github.io/"/>
-  <updated>2018-02-13T07:00:18.782Z</updated>
+  <updated>2018-02-13T09:16:55.457Z</updated>
   <id>http://iworb.github.io/</id>
   
   <author>
@@ -17,11 +17,64 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 4: MongoDb</title>
+    <link href="http://iworb.github.io/2018/02/13/04-nemvn/"/>
+    <id>http://iworb.github.io/2018/02/13/04-nemvn/</id>
+    <published>2018-02-13T10:00:00.000Z</published>
+    <updated>2018-02-13T09:16:55.457Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;[WIP]&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="full-stack" scheme="http://iworb.github.io/categories/full-stack/"/>
+    
+      <category term="NEMVN" scheme="http://iworb.github.io/categories/full-stack/NEMVN/"/>
+    
+    
+      <category term="mongo" scheme="http://iworb.github.io/tags/mongo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 3: Logging, initialization splitting and more helpers</title>
+    <link href="http://iworb.github.io/2018/02/13/03-nemvn/"/>
+    <id>http://iworb.github.io/2018/02/13/03-nemvn/</id>
+    <published>2018-02-13T09:16:42.000Z</published>
+    <updated>2018-02-13T09:16:45.905Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;Logging&quot;&gt;&lt;a href=&quot;#Logging&quot; class=&quot;headerlink&quot; title=&quot;Logging&quot;&gt;&lt;/a&gt;Logging&lt;/h2&gt;&lt;p&gt;Console logging is good, but it doesn’t cover all 
+      
+    
+    </summary>
+    
+      <category term="full-stack" scheme="http://iworb.github.io/categories/full-stack/"/>
+    
+      <category term="NEMVN" scheme="http://iworb.github.io/categories/full-stack/NEMVN/"/>
+    
+    
+      <category term="express" scheme="http://iworb.github.io/tags/express/"/>
+    
+      <category term="log" scheme="http://iworb.github.io/tags/log/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 2: Helpers, Configs and Session</title>
-    <link href="http://iworb.github.io/2018/02/12/02-nemvn/"/>
-    <id>http://iworb.github.io/2018/02/12/02-nemvn/</id>
-    <published>2018-02-12T13:31:15.000Z</published>
-    <updated>2018-02-13T07:00:18.782Z</updated>
+    <link href="http://iworb.github.io/2018/02/13/02-nemvn/"/>
+    <id>http://iworb.github.io/2018/02/13/02-nemvn/</id>
+    <published>2018-02-13T07:05:18.000Z</published>
+    <updated>2018-02-13T09:16:32.341Z</updated>
     
     <summary type="html">
     
@@ -36,6 +89,8 @@
     
       <category term="NEMVN" scheme="http://iworb.github.io/categories/full-stack/NEMVN/"/>
     
+    
+      <category term="express" scheme="http://iworb.github.io/tags/express/"/>
     
   </entry>
   
@@ -71,7 +126,7 @@
     <link href="http://iworb.github.io/2018/02/12/00-nemvn/"/>
     <id>http://iworb.github.io/2018/02/12/00-nemvn/</id>
     <published>2018-02-12T13:10:12.000Z</published>
-    <updated>2018-02-12T14:29:46.334Z</updated>
+    <updated>2018-02-13T08:25:30.430Z</updated>
     
     <summary type="html">
     
