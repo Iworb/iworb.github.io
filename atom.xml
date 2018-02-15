@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://iworb.github.io/"/>
-  <updated>2018-02-13T11:20:46.950Z</updated>
+  <updated>2018-02-15T07:27:37.033Z</updated>
   <id>http://iworb.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 5: Models and Routes. User</title>
+    <link href="http://iworb.github.io/2018/02/13/05-nemvn/"/>
+    <id>http://iworb.github.io/2018/02/13/05-nemvn/</id>
+    <published>2018-02-13T10:00:00.000Z</published>
+    <updated>2018-02-15T07:27:37.033Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;User&quot;&gt;&lt;a href=&quot;#User&quot; class=&quot;headerlink&quot; title=&quot;User&quot;&gt;&lt;/a&gt;User&lt;/h2&gt;&lt;h3 id=&quot;Model&quot;&gt;&lt;a href=&quot;#Model&quot; class=&quot;headerlink&quot; title=&quot;Model&quot;&gt;
+      
+    
+    </summary>
+    
+      <category term="full-stack" scheme="http://iworb.github.io/categories/full-stack/"/>
+    
+      <category term="NEMVN" scheme="http://iworb.github.io/categories/full-stack/NEMVN/"/>
+    
+    
+      <category term="mongo" scheme="http://iworb.github.io/tags/mongo/"/>
+    
+  </entry>
   
   <entry>
     <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 4: MongoDb</title>

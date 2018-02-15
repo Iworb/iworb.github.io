@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Just another one developer blog, who looked for Holy grail">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 5: Models and Routes. User | Iworb&#39;s blog
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Iworb's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archive</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About me</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archive</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About me</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 5: Models and Routes. User</h2>
+  <p class="post-date">2018-02-13</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="User"><a href="#User" class="headerlink" title="User"></a>User</h2><h3 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h3><p>When you’re talking about user you may find plenty things of properties he could have.<br>Let’s check out main ones:</p>
+<ul>
+<li><code>name</code> - aka username;</li>
+<li><code>email</code> - unique user e-mail used for local login;</li>
+<li><code>password</code> - user password’s hash for local login;</li>
+<li><code>status</code> - user could be “active”, “not-verified”, “banned”, etc. Best practice is using predefined status codes.<br>Now we’re ready to create our first model.<br>All models will land in <code>server/models</code> directory, don’t forget to create module alias for it:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;@models&quot;: &quot;./server/models&quot;,</span><br><span class="line">&quot;@routes&quot;: &quot;./server/routes&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>To work with model from outside we have to define routes which can handle request and modify documents. That’s why we created module alias for <code>server/routes</code> directory. We’ll be back soon to describe it behaviour.<br>Let’s look at <code>user.js</code> model:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> c = <span class="built_in">require</span>(<span class="string">'@engine/constants'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>)</span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">'crypto'</span>)</span><br><span class="line"><span class="keyword">const</span> bcrypt = <span class="built_in">require</span>(<span class="string">'bcrypt'</span>)</span><br><span class="line"><span class="keyword">const</span> flatten = <span class="built_in">require</span>(<span class="string">'flat'</span>)</span><br><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> validateLocalStrategyProperty = <span class="function"><span class="keyword">function</span> (<span class="params">property</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> property &amp;&amp; property.length</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> validateLocalStrategyPassword = <span class="function"><span class="keyword">function</span> (<span class="params">password</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> password &amp;&amp; password.length &gt;= <span class="number">6</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> userSchema = mongoose.Schema(&#123;</span><br><span class="line">  name: &#123;</span><br><span class="line">    type: <span class="built_in">String</span>,</span><br><span class="line">    trim: <span class="literal">true</span>,</span><br><span class="line">    unique: <span class="literal">true</span>,</span><br><span class="line">    index: <span class="literal">true</span>,</span><br><span class="line">    <span class="keyword">default</span>: <span class="string">''</span>,</span><br><span class="line">    validate: [validateLocalStrategyProperty, c.E.REQUIRED]</span><br><span class="line">  &#125;,</span><br><span class="line">  local: &#123;</span><br><span class="line">    email: &#123;</span><br><span class="line">      type: <span class="built_in">String</span>,</span><br><span class="line">      trim: <span class="literal">true</span>,</span><br><span class="line">      index: <span class="literal">true</span>,</span><br><span class="line">      lowerCase: <span class="literal">true</span>,</span><br><span class="line">      <span class="keyword">default</span>: <span class="string">''</span>,</span><br><span class="line">      unique: <span class="literal">true</span>,</span><br><span class="line">      match: [<span class="regexp">/.+@.+\..+/</span>, c.E.NOT_VALID],</span><br><span class="line">      validate: [validateLocalStrategyProperty, c.E.REQUIRED]</span><br><span class="line">    &#125;,</span><br><span class="line">    password: &#123;</span><br><span class="line">      type: <span class="built_in">String</span>,</span><br><span class="line">      <span class="keyword">default</span>: <span class="string">''</span>,</span><br><span class="line">      validate: [validateLocalStrategyPassword, [c.E.MIN_LENGTH, <span class="number">6</span>]]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  profile: &#123;</span><br><span class="line">    name: &#123;<span class="attr">type</span>: <span class="built_in">String</span>&#125;,</span><br><span class="line">    gender: &#123;<span class="attr">type</span>: <span class="built_in">String</span>&#125;,</span><br><span class="line">    picture: &#123;<span class="attr">type</span>: <span class="built_in">String</span>&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  status: &#123;</span><br><span class="line">    type: <span class="built_in">Number</span>,</span><br><span class="line">    <span class="keyword">default</span>: <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  timestamps: <span class="literal">true</span>,</span><br><span class="line">  toObject: &#123;</span><br><span class="line">    virtuals: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  toJSON: &#123;</span><br><span class="line">    virtuals: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">protectPassword</span> (<span class="params">next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.getUpdate === <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.getUpdate()[<span class="string">'local.password'</span>]) &#123;</span><br><span class="line">      <span class="keyword">this</span>.getUpdate()[<span class="string">'local.password'</span>] = <span class="keyword">await</span> bcrypt.hash(<span class="keyword">this</span>.getUpdate()[<span class="string">'local.password'</span>], <span class="number">12</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.isModified(<span class="string">'local.password'</span>)) &#123;</span><br><span class="line">      <span class="keyword">this</span>.local.password = <span class="keyword">await</span> bcrypt.hash(<span class="keyword">this</span>.local.password, <span class="number">12</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> next()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">userSchema.pre(<span class="string">'save'</span>, protectPassword)</span><br><span class="line"></span><br><span class="line">userSchema.pre(<span class="string">'update'</span>, protectPassword)</span><br><span class="line"></span><br><span class="line">userSchema.methods.verifyPassword = <span class="function"><span class="keyword">function</span> (<span class="params">password</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> bcrypt.compare(password, <span class="keyword">this</span>.local.password)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">userSchema.methods.verifyPasswordSync = <span class="function"><span class="keyword">function</span> (<span class="params">password</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> bcrypt.compareSync(password, <span class="keyword">this</span>.local.password)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">userSchema.virtual(<span class="string">'avatar'</span>).get(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.profile &amp;&amp; <span class="keyword">this</span>.profile.picture) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.profile.picture</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> getRandomUserAvatarId = <span class="function"><span class="params">str</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> c = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.length; i++) &#123;</span><br><span class="line">      c += str.charCodeAt(i)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> c % <span class="number">100</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> email = <span class="keyword">this</span>.local.email</span><br><span class="line">  <span class="keyword">if</span> (!email) &#123;</span><br><span class="line">    <span class="keyword">const</span> g = <span class="keyword">this</span>.profile &amp;&amp; <span class="keyword">this</span>.profile.gender === <span class="string">'female'</span> ? <span class="string">'women'</span> : <span class="string">'men'</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">`https://randomuser.me/api/portraits/thumb/<span class="subst">$&#123;g&#125;</span>/<span class="subst">$&#123;getRandomUserAvatarId(<span class="keyword">this</span>.local.name)&#125;</span>.jpg`</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> hash = crypto.createHash(<span class="string">'md5'</span>).update(email).digest(<span class="string">'hex'</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`https://gravatar.com/avatar/<span class="subst">$&#123;hash&#125;</span>?s=64&amp;d=wavatar`</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">userSchema.statics.updateUser = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> values = _.pick(req.body, _.keys(userSchema.paths))</span><br><span class="line">  <span class="keyword">if</span> (values._id) <span class="keyword">delete</span> values._id</span><br><span class="line">  values = _.pickBy(flatten(values), _.identity)</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.findById(req.params.id)</span><br><span class="line">    .then(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (</span><br><span class="line">        ((req.body.passNew &amp;&amp; req.body.passNew.length) ||</span><br><span class="line">          (req.body.passNewConfirm &amp;&amp; req.body.passNewConfirm.length)) &amp;&amp;</span><br><span class="line">        req.body.passNew !== req.body.passNewConfirm) &#123;</span><br><span class="line">        user.invalidate(<span class="string">'passNew'</span>, c.E.NOT_MATCH)</span><br><span class="line">        <span class="keyword">throw</span> user.invalidate(<span class="string">'passNewConfirm'</span>, c.E.NOT_MATCH)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (req.body.passNew) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!_.isDefined(values[<span class="string">'local.password'</span>])) &#123;</span><br><span class="line">          <span class="keyword">throw</span> user.invalidate(<span class="string">'local.password'</span>, c.E.REQUIRED)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!user.verifyPasswordSync(values[<span class="string">'local.password'</span>])) &#123;</span><br><span class="line">          <span class="keyword">throw</span> user.invalidate(<span class="string">'local.password'</span>, c.E.NOT_VALID)</span><br><span class="line">        &#125;</span><br><span class="line">        values[<span class="string">'local.password'</span>] = req.body.passNew</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> user.update(values)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> res.json(<span class="literal">true</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(next)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = mongoose.model(<span class="string">'User'</span>, userSchema)</span><br></pre></td></tr></table></figure></p>
+<p>Also, we need <code>bcrypt</code> package for password hashing and <code>flat</code> for flattern objects, so let’s add it:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add bcrypt flat</span><br></pre></td></tr></table></figure></p>
+<p>There’s some nifty functions for make sure password doesn’t store in database, hash only. And little bit functions for profile and avatars.<br>Timestamps are turned on and virtuals are included in toJSON and toObject conversion.<br>We’re return error codes instead of messages.<br>Pros:</p>
+<ul>
+<li>No need to know user locale;</li>
+<li>No need to repeat error message in different places.<br>Cons:</li>
+<li>Error message should be passed as array because of an additional information like numbers (min, max), templates, etc.<br>Let’s create <code>constants.js</code> in the <code>server/engine</code> directory:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="string">'E'</span>: &#123;</span><br><span class="line">    <span class="string">'REQUIRED'</span>: <span class="string">'E_REQUIRED'</span>,</span><br><span class="line">    <span class="string">'UNIQUE'</span>: <span class="string">'E_UNIQUE'</span>,</span><br><span class="line">    <span class="string">'NOT_VALID'</span>: <span class="string">'E_NOT_VALID'</span>,</span><br><span class="line">    <span class="string">'NOT_MATCH'</span>: <span class="string">'E_NOT_MATCH'</span>,</span><br><span class="line">    <span class="string">'MIN_LENGTH'</span>: <span class="string">'E_MIN_LENGTH'</span>,</span><br><span class="line">    <span class="string">'MAX_LENGTH'</span>: <span class="string">'E_MAX_LENGTH'</span>,</span><br><span class="line">    <span class="string">'NOT_IN_RANGE'</span>: <span class="string">'E_NOT_IN_RANGE'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Transforming password into hash should be called each time user saved or updated.<br>Also, we have to be sure that only filled keys should be picked on user update. To set nested objects like <code>local.password</code> we have to make object flat. If we don’t - <code>local</code> key will be completely replaced with a new one.<br>The last thing is to check password if we want to set new one.</p>
+<h3 id="Route"><a href="#Route" class="headerlink" title="Route"></a>Route</h3><p>Before handling routes let’s make one more thing: custom response behaviour.<br>Why do we need that?</p>
+<ul>
+<li>Send errors in response in easy way;</li>
+<li>Custom error messages, extra error data, predefined status codes, etc.<br><code>server/engine/response.js</code>:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line"></span><br><span class="line">  BAD_REQUEST: &#123;</span><br><span class="line">    status: <span class="number">400</span>,</span><br><span class="line">    type: <span class="string">'BAD_REQUEST'</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  UNAUTHORIZED: &#123;</span><br><span class="line">    status: <span class="number">401</span>,</span><br><span class="line">    type: <span class="string">'UNAUTHORIZED'</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  REQUEST_FAILED: &#123;</span><br><span class="line">    status: <span class="number">402</span>,</span><br><span class="line">    type: <span class="string">'REQUEST_FAILED'</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  FORBIDDEN: &#123;</span><br><span class="line">    status: <span class="number">403</span>,</span><br><span class="line">    type: <span class="string">'FORBIDDEN'</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  NOT_FOUND: &#123;</span><br><span class="line">    status: <span class="number">404</span>,</span><br><span class="line">    type: <span class="string">'NOT_FOUND'</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  TOO_MANY_REQUEST: &#123;</span><br><span class="line">    status: <span class="number">429</span>,</span><br><span class="line">    type: <span class="string">'TOO_MANY_REQUEST'</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  SERVER_ERROR: &#123;</span><br><span class="line">    status: <span class="number">500</span>,</span><br><span class="line">    type: <span class="string">'SERVER_ERROR'</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  NOT_IMPLEMENTED: &#123;</span><br><span class="line">    status: <span class="number">501</span>,</span><br><span class="line">    type: <span class="string">'NOT_IMPLEMENTED'</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Generate a JSON REST API response</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * If data present and no error, we will send status 200 with JSON data</span></span><br><span class="line"><span class="comment">   * If no data but has error, we will send HTTP error code and message</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @param  &#123;Object&#125; res          ExpressJS res object</span></span><br><span class="line"><span class="comment">   * @param  &#123;Object&#125; data         Response data</span></span><br><span class="line"><span class="comment">   * @param  &#123;Object&#125; err          Error object</span></span><br><span class="line"><span class="comment">   * @param  &#123;String&#125; errMessage   Custom error message</span></span><br><span class="line"><span class="comment">   * @param  &#123;Object&#125; extraParams  Extra error params</span></span><br><span class="line"><span class="comment">   * @return &#123;*&#125; If res assigned, return with res, otherwise return the response JSON object</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  json (res, data, err, errMessage, extraParams) &#123;</span><br><span class="line">    <span class="keyword">const</span> response = &#123;&#125;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      response.error = err</span><br><span class="line">      response.status = err.status || <span class="number">500</span></span><br><span class="line">      <span class="keyword">if</span> (errMessage) &#123;</span><br><span class="line">        response.error.message = errMessage.message || errMessage</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (extraParams &amp;&amp; _.isObject(extraParams)) response.error = _.assign(response.error, extraParams)</span><br><span class="line">      response.data = data</span><br><span class="line">      <span class="keyword">if</span> (res) res.status(response.status)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      response.status = <span class="number">200</span></span><br><span class="line">      response.data = data</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res ? res.json(response) : response</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Now we ready to make our routing system. Let’s make <code>index.js</code> and <code>user.js</code> files in <code>server/routes</code> directory. <code>index</code> file will gather all routes. <code>user</code> and other ones have to return <code>express-router</code> instance for smooth implementation.<br>Let’s take a look in <code>user.js</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> response = <span class="built_in">require</span>(<span class="string">'@engine/response'</span>)</span><br><span class="line"><span class="keyword">const</span> User = <span class="built_in">require</span>(<span class="string">'@models/user'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br><span class="line"><span class="keyword">const</span> flatten = <span class="built_in">require</span>(<span class="string">'flat'</span>)</span><br><span class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'express'</span>).Router()</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">'/'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">  User.find(&#123;&#125;, &#123;<span class="string">'local.password'</span>: <span class="number">0</span>&#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">users</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> res.json(users)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(next)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">'/:id'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">  User.findById(req.params.id, &#123;<span class="string">'local.password'</span>: <span class="number">0</span>&#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> res.json(user)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(next)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">router.post(<span class="string">'/'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> values = _.pick(req.body, _.keys(User.schema.paths))</span><br><span class="line">  <span class="keyword">if</span> (values._id) <span class="keyword">delete</span> values._id</span><br><span class="line">  values = _.pickBy(flatten(values), _.identity)</span><br><span class="line">  <span class="keyword">const</span> newUser = <span class="keyword">new</span> User(values)</span><br><span class="line">  <span class="keyword">return</span> newUser.save().then(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> response.json(res, _.omit(user.toObject(), <span class="string">'local.password'</span>))</span><br><span class="line">  &#125;).catch(next)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">router.patch(<span class="string">'/:id'</span>, User.updateUser.bind(User))</span><br><span class="line"></span><br><span class="line">router.delete(<span class="string">'/:id'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">  User.findByIdAndRemove(req.params.id)</span><br><span class="line">    .then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> res.json(<span class="literal">true</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(next)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router</span><br></pre></td></tr></table></figure></p>
+<p>Just a REST api, nothing else.<br>Now <code>index.js</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> c = <span class="built_in">require</span>(<span class="string">'@engine/constants'</span>)</span><br><span class="line"><span class="keyword">const</span> logger = <span class="built_in">require</span>(<span class="string">'@engine/logger'</span>)</span><br><span class="line"><span class="keyword">const</span> response = <span class="built_in">require</span>(<span class="string">'@engine/response'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>)</span><br><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br><span class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'express'</span>).Router()</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">app, ...middlewares</span>) =&gt;</span> &#123;</span><br><span class="line">  router.use(<span class="string">'/users'</span>, <span class="built_in">require</span>(<span class="string">'./user'</span>))</span><br><span class="line">  app.use(<span class="string">'/api'</span>, router)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// [1]</span></span><br><span class="line">  middlewares.forEach(<span class="function"><span class="params">middleware</span> =&gt;</span> middleware(app))</span><br><span class="line"></span><br><span class="line">  app.use(<span class="function">(<span class="params">err, req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!err) <span class="keyword">return</span> next()</span><br><span class="line"></span><br><span class="line">    logger.error(err.stack)</span><br><span class="line">    <span class="comment">// [2]</span></span><br><span class="line">    <span class="keyword">if</span> (err <span class="keyword">instanceof</span> mongoose.Error.ValidationError) &#123;</span><br><span class="line">      <span class="keyword">const</span> fields = &#123;&#125;</span><br><span class="line">      _.each(err.errors, e =&gt; &#123;</span><br><span class="line">        fields[e.path] = _.isArray(e.properties) ? e.properties : e.message</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="keyword">return</span> response.json(res, <span class="literal">null</span>, response.BAD_REQUEST, <span class="literal">null</span>, &#123;fields&#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (err.name &amp;&amp; err.name === <span class="string">'BulkWriteError'</span>) &#123;</span><br><span class="line">      <span class="keyword">switch</span> (err.code) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">11000</span>:</span><br><span class="line">          <span class="keyword">let</span> field = err.message.split(<span class="string">'.$'</span>)[<span class="number">1</span>]</span><br><span class="line">          field = field.split(<span class="string">' dup key'</span>)[<span class="number">0</span>]</span><br><span class="line">          field = field.substring(<span class="number">0</span>, field.lastIndexOf(<span class="string">'_'</span>))</span><br><span class="line">          <span class="keyword">return</span> response.json(res, <span class="literal">null</span>, response.BAD_REQUEST, <span class="literal">null</span>, &#123;<span class="attr">fields</span>: &#123;[field]: c.E.UNIQUE&#125;&#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> response.json(res, <span class="literal">null</span>, response.SERVER_ERROR, err.message)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  app.use(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> response.json(res, <span class="literal">null</span>, response.NOT_FOUND)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>There’s some unclear code. The function accepts <code>app</code> argument and <code>...middlewares</code>. The last one contains middlewares which should be init after routes defined, but before error hadling. In our case it’s Nuxt. We can’t define it before routes, because we won’t reach them (Nuxt middleware won’t call <code>next</code> function) and we can’t define it after error handling, because 404 error will be returned before Nuxt.<br>In <code>server/engine/express.js</code> we should call routes initialization:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">db</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line">  initMiddleware(app)</span><br><span class="line">  initHelmetHeaders(app)</span><br><span class="line">  initSession(app, db)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'@routes'</span>)(app, initNuxt)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>We’re also have custom check for ValidationError to retrieve fields which was invalid with error messages (or arrays with message and arguments) and BulkWriteError for <code>unique</code> validation (it’s a bit different than Validation one).<br>This part wraps up <code>05-user</code> git branch.</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#mongo" >
+    <span class="tag-code">mongo</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/02/13/04-nemvn/">
+        <span class="nav-arrow">← </span>
+        
+          Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 4: MongoDb
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#User"><span class="toc-nav-text">User</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Model"><span class="toc-nav-text">Model</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Route"><span class="toc-nav-text">Route</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://iworb.github.io/2018/02/13/05-nemvn/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "iworb";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 5: Models and Routes. User",
+        owner: "iworb",
+        repo: "iworb.github.io",
+        oauth: {
+          client_id: "fc37e05eb55faa187774",
+          client_secret: "5f04db8e93239c8bded02d72e698c87a985f428c"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "ru-RU"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
