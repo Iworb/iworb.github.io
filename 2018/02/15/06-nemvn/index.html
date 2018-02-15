@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Just another one developer blog, who looked for Holy grail">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 6: Authentication | Iworb&#39;s blog
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Iworb's blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archive</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About me</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archive</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About me</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 6: Authentication</h2>
+  <p class="post-date">2018-02-15</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>I highly recommend to use Postman to test your REST api, especially in this part.<br>Let’s get started with authentication with installing <code>passport.js</code> and some requirements:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add passport passport-local</span><br></pre></td></tr></table></figure></p>
+<p>Make an <code>auth</code> directory in your <code>engine</code>. Passport has different strategies to authenticate and it could be split in separate files.<br>It should be init after our session, but before router:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">db</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line">  initMiddleware(app)</span><br><span class="line">  initHelmetHeaders(app)</span><br><span class="line">  initSession(app, db)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'./auth'</span>)(app) <span class="comment">// Here</span></span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'@routes'</span>)(app, initNuxt)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Now we can should handle this in <code>server/engine/auth/index.js</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> logger = <span class="built_in">require</span>(<span class="string">'@engine/logger'</span>)</span><br><span class="line"><span class="keyword">const</span> User = <span class="built_in">require</span>(<span class="string">'@models/user'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> passport = <span class="built_in">require</span>(<span class="string">'passport'</span>)</span><br><span class="line"><span class="keyword">const</span> chalk = <span class="built_in">require</span>(<span class="string">'chalk'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.use(passport.initialize())</span><br><span class="line">  app.use(passport.session())</span><br><span class="line"></span><br><span class="line">  passport.serializeUser(<span class="function">(<span class="params">user, done</span>) =&gt;</span> &#123;</span><br><span class="line">    done(<span class="literal">null</span>, user.id)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  passport.deserializeUser(<span class="function"><span class="keyword">function</span> (<span class="params">id, done</span>) </span>&#123;</span><br><span class="line">    User.findById(id, <span class="string">'-local.password'</span>)</span><br><span class="line">      .then(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// Check that the user is not disabled or deleted</span></span><br><span class="line">        <span class="keyword">if</span> (user.status !== <span class="number">1</span>) <span class="keyword">return</span> done(<span class="literal">null</span>, <span class="literal">false</span>)</span><br><span class="line">        <span class="keyword">return</span> done(<span class="literal">null</span>, user)</span><br><span class="line">      &#125;)</span><br><span class="line">      .catch(done)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  logger.info(chalk.bold(<span class="string">'Passport strategies initialization...'</span>))</span><br><span class="line">  <span class="comment">// [1]</span></span><br><span class="line">  <span class="keyword">const</span> strategies = [<span class="string">'local'</span>]</span><br><span class="line">  strategies.forEach(<span class="function"><span class="params">strategy</span> =&gt;</span> &#123;</span><br><span class="line">    logger.info(<span class="string">`Loading <span class="subst">$&#123;strategy&#125;</span> passport strategy`</span>)</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">`./strategies/<span class="subst">$&#123;strategy&#125;</span>`</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Skip default passport initialization, let’s talk about strategies. Currently I’ve made <code>strategies</code> directory and create local strategy (description below) and load it in [1]. Yes, I could read filesystem, or create another index file to export all strategies I have, but there’s no reason to do that. Strategies changes quite seldom and we could handle this by adding it names in the <code>strategies</code> array of file names.<br>Local login strategy is simple:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> c = <span class="built_in">require</span>(<span class="string">'@engine/constants'</span>)</span><br><span class="line"><span class="keyword">const</span> User = <span class="built_in">require</span>(<span class="string">'@models/user'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;FieldsError&#125; = <span class="built_in">require</span>(<span class="string">'@engine/errors'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> passport = <span class="built_in">require</span>(<span class="string">'passport'</span>)</span><br><span class="line"><span class="keyword">const</span> LocalStrategy = <span class="built_in">require</span>(<span class="string">'passport-local'</span>).Strategy</span><br><span class="line"></span><br><span class="line">passport.use(<span class="string">'local'</span>, <span class="keyword">new</span> LocalStrategy(&#123;</span><br><span class="line">  usernameField: <span class="string">'username'</span>,</span><br><span class="line">  passwordField: <span class="string">'password'</span>,</span><br><span class="line">  passReqToCallback: <span class="literal">true</span></span><br><span class="line">&#125;, <span class="keyword">async</span> (req, username, password, done) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> User.findOne(&#123;</span><br><span class="line">      $or: [</span><br><span class="line">        &#123;<span class="attr">name</span>: username&#125;,</span><br><span class="line">        &#123;<span class="string">'local.email'</span>: username&#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">if</span> (!user) <span class="keyword">return</span> done(<span class="keyword">new</span> FieldsError(&#123;<span class="attr">username</span>: c.E.NOT_FOUND&#125;))</span><br><span class="line">    <span class="keyword">if</span> (user.status !== <span class="number">1</span>) <span class="keyword">return</span> done(<span class="keyword">new</span> FieldsError(&#123;<span class="attr">username</span>: c.E.DISABLED&#125;))</span><br><span class="line">    <span class="keyword">if</span> (!(<span class="keyword">await</span> user.verifyPassword(password))) <span class="keyword">return</span> done(<span class="keyword">new</span> FieldsError(&#123;<span class="attr">password</span>: c.E.INVALID&#125;))</span><br><span class="line">    <span class="keyword">return</span> done(<span class="literal">null</span>, user)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> done(err)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure></p>
+<p>Just check user existance, his status and password.<br>You may see new <code>FieldsError</code> class. It’s been made for throwing Validation-like errors.<br>All custom errors will take their place at <code>server/engine/errors</code> directory. Here’s <code>fieldsError.js</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="class"><span class="keyword">class</span> <span class="title">FormError</span> <span class="keyword">extends</span> <span class="title">Error</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (fields, message, status) &#123;</span><br><span class="line">    <span class="keyword">super</span>(message)</span><br><span class="line">    <span class="keyword">this</span>.status = status || <span class="number">400</span></span><br><span class="line">    <span class="keyword">this</span>.fields = fields</span><br><span class="line">    <span class="built_in">Error</span>.captureStackTrace(<span class="keyword">this</span>, <span class="keyword">this</span>.constructor)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>And <code>index.js</code> placed nearby:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> FieldsError = <span class="built_in">require</span>(<span class="string">'./fieldsError'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  FieldsError</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>We described strategies, so let’s describe routes for auth in <code>server/routes/auth.js</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> passport = <span class="built_in">require</span>(<span class="string">'passport'</span>)</span><br><span class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'express'</span>).Router()</span><br><span class="line"></span><br><span class="line">router.post(<span class="string">'/login'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">  passport.authenticate(<span class="string">'local'</span>, (err, user, info) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err)</span><br><span class="line">    req.login(user, err =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err)</span><br><span class="line">      <span class="keyword">return</span> res.json(<span class="literal">true</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)(req, res, next)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">router.post(<span class="string">'/logout'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  req.logout()</span><br><span class="line">  res.redirect(<span class="string">'/'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router</span><br></pre></td></tr></table></figure></p>
+<p>Finally, add it to routes index and don’t forget about our custom errors:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">const</span> EngineErrors = <span class="built_in">require</span>(<span class="string">'@engine/errors'</span>)</span><br><span class="line">...</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">app, ...middlewares</span>) =&gt;</span> &#123;</span><br><span class="line">  app.use(<span class="built_in">require</span>(<span class="string">'./auth'</span>))</span><br><span class="line"></span><br><span class="line">  router.use(<span class="string">'/users'</span>, <span class="built_in">require</span>(<span class="string">'./user'</span>))</span><br><span class="line">  ...</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (err <span class="keyword">instanceof</span> EngineErrors.FieldsError) &#123;</span><br><span class="line">        <span class="keyword">return</span> response.json(res, <span class="literal">null</span>, response.BAD_REQUEST, <span class="literal">null</span>, &#123;<span class="attr">fields</span>: err.fields&#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> response.json(res, <span class="literal">null</span>, response.SERVER_ERROR, err.message)</span><br><span class="line">      &#125;</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure></p>
+<p>Also, we can invalidate user update if new password and confirmation doesn’t match (user model):<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;FieldsError&#125; = <span class="built_in">require</span>(<span class="string">'@engine/errors'</span>)</span><br><span class="line">...</span><br><span class="line">userSchema.statics.updateUser = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> values = _.pick(req.body, _.keys(userSchema.paths))</span><br><span class="line">  <span class="keyword">if</span> (values._id) <span class="keyword">delete</span> values._id</span><br><span class="line">  values = _.pickBy(flatten(values), _.identity)</span><br><span class="line">  <span class="keyword">if</span> (</span><br><span class="line">    ((req.body.passNew &amp;&amp; req.body.passNew.length) ||</span><br><span class="line">      (req.body.passNewConfirm &amp;&amp; req.body.passNewConfirm.length)) &amp;&amp;</span><br><span class="line">    req.body.passNew !== req.body.passNewConfirm) &#123;</span><br><span class="line">    <span class="keyword">return</span> next(<span class="keyword">new</span> FieldsError(&#123;<span class="attr">passNew</span>: c.E.NOT_MATCH, <span class="attr">passNewConfirm</span>: c.E.NOT_MATCH&#125;))</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.findById(req.params.id)</span><br><span class="line">    .then(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (req.body.passNew) &#123;</span><br><span class="line">        <span class="keyword">if</span> (_.isUndefined(values[<span class="string">'local.password'</span>])) &#123;</span><br><span class="line">          <span class="keyword">throw</span> user.invalidate(<span class="string">'local.password'</span>, c.E.REQUIRED)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!user.verifyPasswordSync(values[<span class="string">'local.password'</span>])) &#123;</span><br><span class="line">          <span class="keyword">throw</span> user.invalidate(<span class="string">'local.password'</span>, c.E.NOT_VALID)</span><br><span class="line">        &#125;</span><br><span class="line">        values[<span class="string">'local.password'</span>] = req.body.passNew</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> user.update(values)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> res.json(<span class="literal">true</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(next)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Finally, let’s make some middleware helpers (<code>server/engine/auth/helpers.js</code>):<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports.isAuthenticated = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (req.isAuthenticated()) <span class="keyword">return</span> next()</span><br><span class="line">  <span class="keyword">else</span> res.sendStatus(<span class="number">401</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Currently anyone can get users list and information about any user, even delete or modify some fields. Let’s improve this:</p>
+<ul>
+<li>List of all users - limit for all list requests, retrieve names only;</li>
+<li>User details - no changes;</li>
+<li>User create - no changes;</li>
+<li>User edit - only owner (currently) should have permissions to edit;</li>
+<li>User delete - noone (currently) should have permissions to delete user.<br>Let’s make some new routes for this purpose:</li>
+<li>post <code>/signup</code> - same as post to <code>/users</code>, create new user;</li>
+<li>get <code>/users/me</code> - same as get <code>/users/:id</code>, but id is current user id;</li>
+<li>patch <code>/users/me</code> - same as patch <code>/users/:id</code>, but id is current user id;<br>First of all, let’s limit of user list retrieve (<code>server/routes/user.js</code>):<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> limit = req.body.limit || req.query.limit || <span class="number">50</span></span><br><span class="line">  <span class="keyword">let</span> page = req.body.page || req.query.page || <span class="number">1</span></span><br><span class="line">  <span class="keyword">let</span> total</span><br><span class="line">  <span class="keyword">if</span> (page &lt; <span class="number">1</span>) page = <span class="number">1</span></span><br><span class="line">  page--</span><br><span class="line">  User.count()</span><br><span class="line">    .then(<span class="function"><span class="params">c</span> =&gt;</span> &#123;</span><br><span class="line">      total = c</span><br><span class="line">      <span class="keyword">return</span> User.find(&#123;&#125;, &#123;<span class="attr">name</span>: <span class="number">1</span>&#125;).limit(limit).skip(limit * page)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">users</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> res.json(&#123;</span><br><span class="line">        total: total,</span><br><span class="line">        items: users</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(next)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>To achieve <code>/signup</code> behaviour we have to move our user creation logic from router to model:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">userSchema.statics.createUser = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> values = _.pick(req.body, _.keys(userSchema.paths))</span><br><span class="line">  <span class="keyword">if</span> (values._id) <span class="keyword">delete</span> values._id</span><br><span class="line">  values = _.pickBy(flatten(values), _.identity)</span><br><span class="line">  <span class="keyword">const</span> newUser = <span class="keyword">new</span> <span class="keyword">this</span>(values)</span><br><span class="line">  <span class="keyword">return</span> newUser.save().then(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> response.json(res, _.omit(user.toObject(), <span class="string">'local.password'</span>))</span><br><span class="line">  &#125;).catch(next)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>server/routes/user.js</code> changes:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router.post(<span class="string">'/'</span>, User.createUser.bind(User))</span><br></pre></td></tr></table></figure></p>
+<p><code>server/routes/auth.js</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router.post(<span class="string">'/signup'</span>, User.createUser.bind(User))</span><br></pre></td></tr></table></figure></p>
+<p>To get <code>/users/me</code> we should define handler before <code>/users/:id</code>, otherwise it will try to fetch user with <code>id=&#39;me&#39;</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;isAuthenticated&#125; = <span class="built_in">require</span>(<span class="string">'@engine/auth/helpers'</span>)</span><br><span class="line">...</span><br><span class="line">router.get(<span class="string">'/me'</span>, isAuthenticated, (req, res, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> res.json(req.user.toObject())</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>Patch <code>/users/me</code> looks similar, deleting user now will throw error:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">router.patch(<span class="string">'/me'</span>, isAuthenticated, User.updateUser.bind(User))</span><br><span class="line"></span><br><span class="line">router.patch(<span class="string">'/:id'</span>, isAuthenticated, User.updateUser.bind(User))</span><br><span class="line"></span><br><span class="line">router.delete(<span class="string">'/:id'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> response(res, <span class="literal">null</span>, response.REQUEST_FAILED)</span><br><span class="line">  <span class="comment">// User.findByIdAndRemove(req.params.id)</span></span><br><span class="line">  <span class="comment">//   .then(() =&gt; &#123;</span></span><br><span class="line">  <span class="comment">//     return res.json(true)</span></span><br><span class="line">  <span class="comment">//   &#125;)</span></span><br><span class="line">  <span class="comment">//   .catch(next)</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>And the last thing is modifying <code>updateUser</code> function because we should handle new route:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">userSchema.statics.updateUser = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> values = _.pick(req.body, _.keys(userSchema.paths))</span><br><span class="line">  <span class="keyword">if</span> (values._id) <span class="keyword">delete</span> values._id</span><br><span class="line">  values = _.pickBy(flatten(values), _.identity)</span><br><span class="line">  <span class="keyword">if</span> (</span><br><span class="line">    ((req.body.passNew &amp;&amp; req.body.passNew.length) ||</span><br><span class="line">      (req.body.passNewConfirm &amp;&amp; req.body.passNewConfirm.length)) &amp;&amp;</span><br><span class="line">    req.body.passNew !== req.body.passNewConfirm) &#123;</span><br><span class="line">    <span class="keyword">return</span> next(<span class="keyword">new</span> FieldsError(&#123;<span class="attr">passNew</span>: c.E.NOT_MATCH, <span class="attr">passNewConfirm</span>: c.E.NOT_MATCH&#125;))</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> user = req.params.id ? <span class="keyword">await</span> <span class="keyword">this</span>.findById(req.params.id) : req.user</span><br><span class="line">    <span class="keyword">if</span> (user._id !== req.user._id) <span class="keyword">return</span> response.json(res, <span class="literal">null</span>, response.FORBIDDEN, c.E.DENIED)</span><br><span class="line">    <span class="keyword">if</span> (req.body.passNew) &#123;</span><br><span class="line">      <span class="keyword">if</span> (_.isUndefined(values[<span class="string">'local.password'</span>])) &#123;</span><br><span class="line">        <span class="keyword">return</span> next(user.invalidate(<span class="string">'local.password'</span>, c.E.REQUIRED))</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (!user.verifyPasswordSync(values[<span class="string">'local.password'</span>])) &#123;</span><br><span class="line">        <span class="keyword">return</span> next(user.invalidate(<span class="string">'local.password'</span>, c.E.NOT_VALID))</span><br><span class="line">      &#125;</span><br><span class="line">      values[<span class="string">'local.password'</span>] = req.body.passNew</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">await</span> user.update(values)</span><br><span class="line">    <span class="keyword">return</span> res.json(<span class="literal">true</span>)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> next(err)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Now user can edit only himself.<br>NB: there’s some more constants added into <code>server/engine/constants.js</code>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'DENIED'</span>: <span class="string">'E_DENIED'</span>,</span><br><span class="line"><span class="string">'DISABLED'</span>: <span class="string">'E_DISABLED'</span>,</span><br><span class="line"><span class="string">'INVALID'</span>: <span class="string">'E_INVALID'</span>,</span><br><span class="line"><span class="string">'NOT_FOUND'</span>: <span class="string">'E_NOT_FOUND'</span>,</span><br></pre></td></tr></table></figure></p>
+<p>This part wraps up <code>05-auth</code> git branch.</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#mongo" >
+    <span class="tag-code">mongo</span>
+  </a>
+
+  <a href="/tags#passport" >
+    <span class="tag-code">passport</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2018/02/15/05-nemvn/">
+        <span class="nav-arrow">← </span>
+        
+          Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 5: Models and Routes. User
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="nav">none</ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://iworb.github.io/2018/02/15/06-nemvn/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "iworb";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 6: Authentication",
+        owner: "iworb",
+        repo: "iworb.github.io",
+        oauth: {
+          client_id: "fc37e05eb55faa187774",
+          client_secret: "5f04db8e93239c8bded02d72e698c87a985f428c"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "ru-RU"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2018 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

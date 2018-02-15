@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://iworb.github.io/"/>
-  <updated>2018-02-15T07:27:37.033Z</updated>
+  <updated>2018-02-15T13:44:30.518Z</updated>
   <id>http://iworb.github.io/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 6: Authentication</title>
+    <link href="http://iworb.github.io/2018/02/15/06-nemvn/"/>
+    <id>http://iworb.github.io/2018/02/15/06-nemvn/</id>
+    <published>2018-02-15T13:44:48.000Z</published>
+    <updated>2018-02-15T13:44:30.518Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;I highly recommend to use Postman to test your REST api, especially in this part.&lt;br&gt;Let’s get started with authentication with installin
+      
+    
+    </summary>
+    
+      <category term="full-stack" scheme="http://iworb.github.io/categories/full-stack/"/>
+    
+      <category term="NEMVN" scheme="http://iworb.github.io/categories/full-stack/NEMVN/"/>
+    
+    
+      <category term="mongo" scheme="http://iworb.github.io/tags/mongo/"/>
+    
+      <category term="passport" scheme="http://iworb.github.io/tags/passport/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 5: Models and Routes. User</title>
-    <link href="http://iworb.github.io/2018/02/13/05-nemvn/"/>
-    <id>http://iworb.github.io/2018/02/13/05-nemvn/</id>
-    <published>2018-02-13T10:00:00.000Z</published>
-    <updated>2018-02-15T07:27:37.033Z</updated>
+    <link href="http://iworb.github.io/2018/02/15/05-nemvn/"/>
+    <id>http://iworb.github.io/2018/02/15/05-nemvn/</id>
+    <published>2018-02-15T08:24:08.000Z</published>
+    <updated>2018-02-15T13:41:40.544Z</updated>
     
     <summary type="html">
     
@@ -45,8 +72,8 @@
     <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 4: MongoDb</title>
     <link href="http://iworb.github.io/2018/02/13/04-nemvn/"/>
     <id>http://iworb.github.io/2018/02/13/04-nemvn/</id>
-    <published>2018-02-13T10:00:00.000Z</published>
-    <updated>2018-02-13T11:20:46.950Z</updated>
+    <published>2018-02-13T11:15:05.000Z</published>
+    <updated>2018-02-15T13:41:23.802Z</updated>
     
     <summary type="html">
     
@@ -139,9 +166,9 @@
       <category term="NEMVN" scheme="http://iworb.github.io/categories/full-stack/NEMVN/"/>
     
     
-      <category term="nuxt" scheme="http://iworb.github.io/tags/nuxt/"/>
-    
       <category term="express" scheme="http://iworb.github.io/tags/express/"/>
+    
+      <category term="nuxt" scheme="http://iworb.github.io/tags/nuxt/"/>
     
   </entry>
   
