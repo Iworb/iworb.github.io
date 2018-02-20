@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://iworb.github.io/"/>
-  <updated>2018-02-16T12:59:15.251Z</updated>
+  <updated>2018-02-20T08:36:10.687Z</updated>
   <id>http://iworb.github.io/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>Full Stack (Node + Express + MongoDb + Vue + Nuxt) application. Part 7: Visual part</title>
-    <link href="http://iworb.github.io/2018/02/16/07-nemvn/"/>
-    <id>http://iworb.github.io/2018/02/16/07-nemvn/</id>
-    <published>2018-02-16T12:59:22.000Z</published>
-    <updated>2018-02-16T12:59:15.251Z</updated>
+    <link href="http://iworb.github.io/2018/02/20/07-nemvn/"/>
+    <id>http://iworb.github.io/2018/02/20/07-nemvn/</id>
+    <published>2018-02-20T08:34:34.000Z</published>
+    <updated>2018-02-20T08:36:10.687Z</updated>
     
     <summary type="html">
     
@@ -39,6 +39,8 @@
     
       <category term="nuxt" scheme="http://iworb.github.io/tags/nuxt/"/>
     
+      <category term="vuetify" scheme="http://iworb.github.io/tags/vuetify/"/>
+    
   </entry>
   
   <entry>
@@ -46,7 +48,7 @@
     <link href="http://iworb.github.io/2018/02/15/06-nemvn/"/>
     <id>http://iworb.github.io/2018/02/15/06-nemvn/</id>
     <published>2018-02-15T13:44:48.000Z</published>
-    <updated>2018-02-16T09:11:10.731Z</updated>
+    <updated>2018-02-20T08:36:00.925Z</updated>
     
     <summary type="html">
     
